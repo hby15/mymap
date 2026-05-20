@@ -16,351 +16,111 @@
             width: 100%;
             height: 100%;
             font-family: 'Malgun Gothic', dotum, sans-serif;
+            background-color: #fcf8f9; /* 연한 핑크빛 도는 부드러운 배경 */
         }
 
-        /* 메인 컨테이너 레이아웃 (좌우 2분할) */
+        /* 화면을 왼쪽과 오른쪽으로 2분할하는 메인 컨테이너 */
         .container {
             display: flex;
             width: 100%;
             height: 100%;
         }
 
-        /* 왼쪽 사이드바 */
+        /* 왼쪽 사이드바 (검색창 + 결과 리스트) */
         .sidebar {
-            width: 380px; /* 상세 정보 표시를 위해 너비를 조금 넓혔습니다 */
+            width: 380px; 
             height: 100%;
             display: flex;
             flex-direction: column;
-            border-right: 1px solid #ccc;
-            background-color: #f9f9f9;
+            border-right: 1px solid #ebd4d8;
+            background-color: #ffffff;
             z-index: 10;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
         }
 
-        /* 검색창 */
+        /* 검색창 영역 */
         .search-box {
-            padding: 15px;
-            background-color: #fff;
-            border-bottom: 1px solid #eee;
+            padding: 20px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #f5e6e8;
             display: flex;
-            gap: 5px;
+            gap: 8px;
         }
 
         .search-box input {
             flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 10px 12px;
+            border: 1px solid #ebd4d8;
+            border-radius: 6px;
             font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: #ffb6c1; /* 포커스 시 파스텔 핑크 */
         }
 
         .search-box button {
-            padding: 8px 15px;
-            background-color: #ffb6c1; /* 파스텔 핑크 테마에 맞춘 버튼 색상 */
+            padding: 10px 18px;
+            background-color: #ffb6c1; /* 파스텔톤 핑크 */
+            color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            color: #fff;
+            transition: background-color 0.2s;
         }
 
-        /* 검색 결과 리스트 (스크롤 가능) */
+        .search-box button:hover {
+            background-color: #ffa0b0;
+        }
+
+        /* 검색 결과 리스트 영역 (스크롤 가능) */
         .places-list {
             flex: 1;
             overflow-y: auto;
             list-style: none;
+            background-color: #ffffff;
         }
 
         .places-list li {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
+            padding: 18px 20px;
+            border-bottom: 1px solid #fcf2f4;
             cursor: pointer;
-            background-color: #fff;
             transition: background-color 0.2s;
         }
 
         .places-list li:hover {
-            background-color: #fff0f5; /* 마우스 오버 시 파스텔 핑크빛 */
+            background-color: #fff0f2;
         }
 
         .places-list h5 {
             font-size: 16px;
-            margin-bottom: 5px;
-            color: #333;
+            margin-bottom: 6px;
+            color: #4a3b3d;
+            font-weight: bold;
         }
 
         .places-list p {
             font-size: 13px;
-            color: #666;
-            margin-bottom: 3px;
+            color: #7a6b6d;
+            margin-bottom: 4px;
+            line-height: 1.4;
         }
 
-        /* 리스트 내부의 문화공간 상세 스타일 */
-        .culture-info {
-            margin-top: 8px;
-            padding-top: 8px;
-            border-top: 1px dashed #ffd1dc;
-            font-size: 12px;
-        }
-        
-        .info-tag {
+        .places-list .info-tag {
             display: inline-block;
-            background-color: #ffe4e1;
-            color: #ff69b4;
+            font-size: 11px;
+            background-color: #fff0f2;
+            color: #ff788f;
             padding: 2px 6px;
-            border-radius: 3px;
-            font-weight: bold;
-            margin-right: 5px;
+            border-radius: 4px;
+            margin-right: 4px;
+            margin-top: 4px;
         }
 
         /* 오른쪽 지도 영역 */
         .map-area {
-            flex: 1;
-            height: 100%;
-        }
-
-        /* 하트 이모지 마커 스타일 */
-        .heart-marker {
-            font-size: 28px;
-            text-shadow: 0px 2px 4px rgba(0,0,0,0.2);
-            cursor: pointer;
-            animation: bounce 0.5s ease infinite alternate; /* 깜찍한 바운스 효과 */
-        }
-
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-4px); }
-        }
-
-        /* 지도 위 커스텀 오버레이(팝업창) 스타일 */
-        .custom-popup {
-            position: relative;
-            bottom: 55px;
-            border-radius: 6px;
-            border: 1px solid #ffb6c1;
-            border-bottom: 2px solid #ff69b4;
-            background: #fff;
-            padding: 10px;
-            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
-            font-size: 13px;
-            white-space: nowrap;
-        }
-
-        .popup-title {
-            font-weight: bold;
-            color: #ff69b4;
-            margin-bottom: 4px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <div class="sidebar">
-            <div class="search-box">
-                <input type="text" id="keyword" placeholder="문화공간이나 장소를 검색해보세요" onkeypress="if(event.keyCode==13) searchPlaces()">
-                <button onclick="searchPlaces()">검색</button>
-            </div>
-            <ul id="placesList" class="places-list"></ul>
-        </div>
-
-        <div id="map" class="map-area"></div>
-    </div>
-
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=4628ecaa202b09762be70a8335b397e7&libraries=services&autoload=false"></script>
-    
-    <script>
-        // 전역 변수 선언
-        let map;
-        let placeSearchService;
-        let heartMarkers = []; // 화면에 표시된 하트 오버레이들을 담을 배열
-        let activePopup = null; // 현재 지도에 열려있는 단 하나의 팝업창 객체 고정
-
-        // 지도가 안전하게 로드된 후 실행
-        kakao.maps.load(function() {
-            const mapContainer = document.getElementById('map');
-            const defaultPosition = new kakao.maps.LatLng(37.566826, 126.9786567); // 서울시청 기본값
-            
-            const mapOptions = {
-                center: defaultPosition,
-                level: 5
-            };
-
-            map = new kakao.maps.Map(mapContainer, mapOptions);
-            placeSearchService = new kakao.maps.services.Places();
-
-            // 사용자 현재 위치 가져오기 및 중심 이동
-            getUserCurrentLocation();
-        });
-
-        // 현재 위치를 가져오는 함수
-        function getUserCurrentLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-                    const currentPos = new kakao.maps.LatLng(lat, lon);
-                    
-                    map.setCenter(currentPos);
-                    
-                    // 현재 내 위치를 알려주는 기본 마커 표시
-                    new kakao.maps.Marker({
-                        position: currentPos,
-                        map: map
-                    });
-                });
-            }
-        }
-
-        // 키워드 검색 실행
-        function searchPlaces() {
-            const keyword = document.getElementById('keyword').value.trim();
-
-            if (!keyword) {
-                alert('검색어를 입력해주세요!');
-                return;
-            }
-
-            // 카카오 키워드 검색 서비스 호출
-            placeSearchService.keywordSearch(keyword, placesSearchCB);
-        }
-
-        // 검색 완료 콜백 함수
-        function placesSearchCB(data, status, pagination) {
-            if (status === kakao.maps.services.Status.OK) {
-                displayPlaces(data);
-            } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-                alert('검색 결과가 존재하지 않습니다.');
-            } else if (status === kakao.maps.services.Status.ERROR) {
-                alert('검색 중 오류가 발생했습니다.');
-            }
-        }
-
-        // 장소에 따른 가상의 문화공간 상세 데이터를 만들어주는 함수
-        function getMockCultureDetail(placeName) {
-            if (placeName.includes('미술관') || placeName.includes('갤러리')) {
-                return {
-                    hours: "10:00 ~ 18:00",
-                    holiday: "매주 월요일 휴무",
-                    desc: "감성을 채우는 아름다운 미술 전시 공간입니다."
-                };
-            } else if (placeName.includes('도서관') || placeName.includes('책')) {
-                return {
-                    hours: "09:00 ~ 22:00",
-                    holiday: "법정공휴일 및 격주 월요일",
-                    desc: "독서와 사색을 즐길 수 있는 조용한 복합 문화 공간입니다."
-                };
-            } else if (placeName.includes('박물관')) {
-                return {
-                    hours: "09:00 ~ 18:00",
-                    holiday: "1월 1일 및 설/추석 당일",
-                    desc: "역사와 전통을 한눈에 볼 수 있는 교육적인 공간입니다."
-                };
-            } else {
-                return {
-                    hours: "11:00 ~ 21:00",
-                    holiday: "연중무휴",
-                    desc: "다양한 여가 활동과 문화 체험이 가능한 지역 명소입니다."
-                };
-            }
-        }
-
-        // 검색 결과를 화면에 표시 (마커 + 리스트 갱신)
-        function displayPlaces(places) {
-            const listEl = document.getElementById('placesList');
-            const bounds = new kakao.maps.LatLngBounds();
-            
-            // 기존 오브젝트 청소 (새로 검색할 때 기존 마커 지우기 조건 반영)
-            clearMapObjects();
-            listEl.innerHTML = '';
-
-            for (let i = 0; i < places.length; i++) {
-                const placePosition = new kakao.maps.LatLng(places[i].y, places[i].x);
-                const detail = getMockCultureDetail(places[i].place_name); 
-                const address = places[i].road_address_name ? places[i].road_address_name : places[i].address_name;
-                
-                // 1. 파스텔톤 핑크 하트 이모지 마커 생성 (DOM 객체 방식으로 에러 방지)
-                const markerContent = document.createElement('div');
-                markerContent.className = 'heart-marker';
-                markerContent.innerText = '🩷'; 
-                
-                const customMarker = new kakao.maps.CustomOverlay({
-                    position: placePosition,
-                    content: markerContent,
-                    clickable: true
-                });
-                
-                customMarker.setMap(map);
-                heartMarkers.push(customMarker); 
-
-                // 2. 마커나 리스트 클릭 시 나타날 주소 및 설명 팝업창 노드 생성
-                const popupContent = document.createElement('div');
-                popupContent.className = 'custom-popup';
-                popupContent.innerHTML = `
-                    <div class="popup-title">${places[i].place_name}</div>
-                    <div style="font-size:11px; color:#555; margin-bottom:4px;">📍 ${address}</div>
-                    <div style="font-size:11px; color:#ff69b4;">✨ ${detail.desc}</div>
-                `;
-
-                const detailPopup = new kakao.maps.CustomOverlay({
-                    position: placePosition,
-                    content: popupContent,
-                    yAnchor: 1 
-                });
-
-                // 마커 클릭 이벤트 바인딩
-                markerContent.onclick = function() {
-                    if (activePopup) {
-                        activePopup.setMap(null);
-                    }
-                    detailPopup.setMap(map);
-                    activePopup = detailPopup;
-                    map.panTo(placePosition);
-                };
-
-                // 지도 영역 조정을 위한 좌표 누적
-                bounds.extend(placePosition);
-
-                // 3. 왼쪽 리스트 아이템 생성 및 삽입
-                const itemEl = document.createElement('li');
-                itemEl.innerHTML = `
-                    <h5>${places[i].place_name}</h5>
-                    <p style="color:#888;">${address}</p>
-                    <div class="culture-info">
-                        <p><span class="info-tag">시간</span> ${detail.hours}</p>
-                        <p><span class="info-tag">휴무</span> ${detail.holiday}</p>
-                        <p style="color:#777; margin-top:4px; font-style:italic;">"${detail.desc}"</p>
-                    </div>
-                `;
-
-                // 리스트 아이템 클릭 시 처리
-                itemEl.onclick = function() {
-                    if (activePopup) {
-                        activePopup.setMap(null);
-                    }
-                    detailPopup.setMap(map);
-                    activePopup = detailPopup;
-                    map.panTo(placePosition);
-                };
-
-                listEl.appendChild(itemEl);
-            }
-
-            // 모든 마커가 시야에 들어오도록 지도 위치 자동 재설정
-            map.setBounds(bounds);
-        }
-
-        // 지도 위의 마커와 팝업창을 지우는 함수
-        function clearMapObjects() {
-            for (let i = 0; i < heartMarkers.length; i++) {
-                heartMarkers[i].setMap(null);
-            }
-            heartMarkers = [];
-
-            if (activePopup) {
-                activePopup.setMap(null);
-                activePopup = null;
-            }
-        }
-    </script>
-</body>
-</html>
+            flex: 1; 
+            height:
